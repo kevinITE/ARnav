@@ -11,7 +11,7 @@
 
     <SearchView
         android:id="@+id/search_view"
-        android:background="@drawable/buttonshape"
+        android:background="@color/colorPrimaryTransparent"
         android:padding="20dp"
         android:queryHint="@string/company_name"
         android:layout_centerHorizontal="true"
