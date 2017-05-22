@@ -7,6 +7,8 @@
         <item name="android:colorPrimary">@color/colorPrimary</item>
         <item name="android:colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="android:colorAccent">@color/colorAccent</item>
+        <item name="android:editTextColor">@color/colorPrimary</item>
+        <item name="android:textColorHint">@color/colorPrimary</item>
     </style>
 
     <style name="BigFont" parent="@android:style/TextAppearance.Large">
