@@ -48,7 +48,7 @@ public class CompanyList extends Activity {
 
         final GridView gridView = (GridView) findViewById(R.id.lst_companies);
         final ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar);
-        final EditText searchView = (EditText) findViewById(R.id.search_view);
+        final SearchView searchView = (SearchView) findViewById(R.id.search_view);
 
         final OnItemClickListener companyClickListener = new OnItemClickListener() {
             @Override
@@ -87,23 +87,20 @@ public class CompanyList extends Activity {
                         gridView.setAdapter(imageAdapter);
                         gridView.setTextFilterEnabled(true);
 
-                        searchView.addTextChangedListener(new TextWatcher() {
+                        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
 
                             @Override
-                            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                                System.out.println("Text ["+s+"]");
-                                imageAdapter.getFilter().filter(s.toString());
+                            public boolean onQueryTextSubmit(String query) {
+                                return false;
                             }
 
                             @Override
-                            public void beforeTextChanged(CharSequence s, int start, int count,
-                                                          int after) {
-
+                            public boolean onQueryTextChange(String newText) {
+                                System.out.println("Text ["+newText+"]");
+                                imageAdapter.getFilter().filter(newText);
+                                return false;
                             }
 
-                            @Override
-                            public void afterTextChanged(Editable s) {
-                            }
                         });
 
                     }

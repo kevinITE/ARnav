@@ -9,7 +9,7 @@
         android:scaleType="centerCrop"
         android:src="@drawable/corda_bg" />
 
-    <EditText
+    <SearchView
         android:id="@+id/search_view"
         android:background="@drawable/buttonshape"
         android:padding="20dp"

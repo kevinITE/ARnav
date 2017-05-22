@@ -48,7 +48,7 @@ public class EmployeeList extends Activity {
 
         final ListView gridView = (ListView) findViewById(R.id.lst_employees);
         final ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar);
-        final EditText searchView = (EditText) findViewById(R.id.search_view);
+        final SearchView searchView = (SearchView) findViewById(R.id.search_view);
 
         final OnItemClickListener employeeClickListener = new OnItemClickListener() {
             @Override
@@ -86,23 +86,20 @@ public class EmployeeList extends Activity {
                         gridView.setAdapter(employeeAdapter);
                         gridView.setTextFilterEnabled(true);
 
-                        searchView.addTextChangedListener(new TextWatcher() {
+                        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
 
                             @Override
-                            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                                System.out.println("Text ["+s+"]");
-                                employeeAdapter.getFilter().filter(s.toString());
+                            public boolean onQueryTextSubmit(String query) {
+                                return false;
                             }
 
                             @Override
-                            public void beforeTextChanged(CharSequence s, int start, int count,
-                                                          int after) {
-
+                            public boolean onQueryTextChange(String newText) {
+                                System.out.println("Text ["+newText+"]");
+                                employeeAdapter.getFilter().filter(newText);
+                                return false;
                             }
 
-                            @Override
-                            public void afterTextChanged(Editable s) {
-                            }
                         });
 
                     }
