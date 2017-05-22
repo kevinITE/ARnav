@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="app_name">ARnav</string>
+  <string name="corda_welcome">Welcome to the amazing world of the Corda Campus!</string>
+  <string name="choose_destination">Choose your destiny</string>
+  <string name="search_by_name">Search by name</string>
+  <string name="destination_list">Destination List</string>
+    <string name="company_name">Company name</string>
+    <string name="search_by_company">Search by company</string>
+  <string name="search_by_employee">Search by employee</string>
+    <string name="employee_list">Employee list</string>
+</resources>

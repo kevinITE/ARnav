@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/corda_bg" />
+
+    <SearchView
+        android:id="@+id/search_view"
+        android:background="@drawable/buttonshape"
+        android:padding="20dp"
+        android:layout_margin="20dp"
+        android:queryHint="Employee name"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <Button
+        android:id="@+id/company_button"
+        android:layout_toEndOf="@id/search_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:background="@drawable/buttonshape"
+        android:padding="20dp"
+        android:text="@string/search_by_company"
+        android:onClick="gotoCompanyList"
+        android:textColor="@color/colorPrimary" />
+
+    <RelativeLayout
+        android:padding="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/search_view"
+        android:gravity="center">
+        <ProgressBar
+            android:padding="20dp"
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            android:layout_centerHorizontal="true"
+            />
+        <ListView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:padding="20dp"
+            android:id="@+id/lst_employees"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:verticalSpacing="10dp"
+            android:horizontalSpacing="10dp"
+            android:gravity="center"
+            />
+    </RelativeLayout>
+
+
+
+</RelativeLayout>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="companies_array">
+        <item>Cegeka</item>
+        <item>QNH</item>
+        <item>Leoni</item>
+        <item>Selligent</item>
+        <item>Simplex</item>
+        <item>Right brain</item>
+        <item>Buggy Booker</item>
+        <item>OntoForce</item>
+        <item>Hey Local</item>
+        <item>EDF</item>
+        <item>Cegeka</item>
+        <item>QNH</item>
+        <item>Leoni</item>
+        <item>Selligent</item>
+        <item>Simplex</item>
+        <item>Right brain</item>
+        <item>Buggy Booker</item>
+        <item>OntoForce</item>
+        <item>Hey Local</item>
+        <item>EDF</item>
+        <item>Cegeka</item>
+        <item>QNH</item>
+        <item>Leoni</item>
+        <item>Selligent</item>
+        <item>Simplex</item>
+        <item>Right brain</item>
+        <item>Buggy Booker</item>
+        <item>OntoForce</item>
+        <item>Hey Local</item>
+        <item>EDF</item>
+    </string-array>
+
+</resources>
