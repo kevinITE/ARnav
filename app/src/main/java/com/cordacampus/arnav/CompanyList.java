@@ -4,9 +4,12 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ProgressBar;
 import android.widget.SearchView;
@@ -45,15 +48,16 @@ public class CompanyList extends Activity {
 
         final GridView gridView = (GridView) findViewById(R.id.lst_companies);
         final ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar);
-        final SearchView searchView = (SearchView) findViewById(R.id.search_view);
+        final EditText searchView = (EditText) findViewById(R.id.search_view);
 
         final OnItemClickListener companyClickListener = new OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
                 selectedCompany = (Company) parent.getAdapter().getItem(position);
+                Log.d("Selected company", selectedCompany.getName());
 
-                UnityPlayer.UnitySendMessage("ARCamera","Receive", gson.toJson(selectedCompany));
+//                UnityPlayer.UnitySendMessage("ARCamera","Receive", gson.toJson(selectedCompany));
 
                 finishActivity(1);
                 finish();
@@ -83,16 +87,22 @@ public class CompanyList extends Activity {
                         gridView.setAdapter(imageAdapter);
                         gridView.setTextFilterEnabled(true);
 
-                        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                        searchView.addTextChangedListener(new TextWatcher() {
+
                             @Override
-                            public boolean onQueryTextSubmit(String query) {
-                                return false;
+                            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                                System.out.println("Text ["+s+"]");
+                                imageAdapter.getFilter().filter(s.toString());
                             }
 
                             @Override
-                            public boolean onQueryTextChange(String newText) {
-                                imageAdapter.getFilter().filter(newText);
-                                return false;
+                            public void beforeTextChanged(CharSequence s, int start, int count,
+                                                          int after) {
+
+                            }
+
+                            @Override
+                            public void afterTextChanged(Editable s) {
                             }
                         });
 

@@ -20,76 +20,98 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class ImageAdapter extends BaseAdapter implements Filterable {
-    private Context context;
     private List<Company> companyList;
     private List<Company> filteredCompanyList;
+    private CompanyFilter companyFilter;
+    private LayoutInflater mInflater;
 
     public ImageAdapter(Context context, List<Company> companyList) {
-        this.context = context;
+        mInflater = LayoutInflater.from(context);
         this.filteredCompanyList = companyList;
         this.companyList = companyList;
     }
 
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        LayoutInflater inflater = (LayoutInflater) context
-                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        // A ViewHolder keeps references to children views to avoid unnecessary calls
+        // to findViewById() on each row.
+        ViewHolder holder;
 
-        View gridView;
-
+        // When convertView is not null, we can reuse it directly, there is no need
+        // to reinflate it. We only inflate a new View when the convertView supplied
+        // by ListView is null.
         if (convertView == null) {
+            convertView = mInflater.inflate(R.layout.item, null);
 
-            gridView = new View(context);
+            // Creates a ViewHolder and store references to the two children views
+            // we want to bind data to.
+            holder = new ViewHolder();
+            holder.image = (ImageView) convertView.findViewById(R.id.grid_item_image);
 
-            // get layout from mobile.xml
-            gridView = inflater.inflate(R.layout.item, null);
-
-            // set image based on selected text
-            ImageView imageView = (ImageView) gridView
-                    .findViewById(R.id.grid_item_image);
-
-            // download logo from url
-            new DownloadImageTask((ImageView) gridView.findViewById(R.id.grid_item_image))
-                    .execute(filteredCompanyList.get(position).getLogo());
-
-
+            // Bind the data efficiently with the holder.
+            convertView.setTag(holder);
         } else {
-            gridView = (View) convertView;
+            // Get the ViewHolder back to get fast access to the TextView
+            // and the ImageView.
+            holder = (ViewHolder) convertView.getTag();
         }
 
-        return gridView;
+        new DownloadImageTask(holder.image).execute(filteredCompanyList.get(position).getLogo());
+
+        return convertView;
+    }
+
+    static class ViewHolder {
+        ImageView image;
     }
 
     @Override
     public Filter getFilter() {
-        return new Filter() {
-            @Override
-            protected FilterResults performFiltering(CharSequence constraint) {
-                FilterResults results = new FilterResults();
-                if (constraint == null || constraint.length() == 0) {
-                    //no constraint given, just return all the data. (no search)
-                    results.count = companyList.size();
-                    results.values = companyList;
-                } else {//do the search
-                    List<Company> resultsData = new ArrayList<>();
-                    String searchStr = constraint.toString().toUpperCase();
-                    for (Company o : companyList)
-                        if (o.getName().toUpperCase().startsWith(searchStr)) resultsData.add(o);
-                    results.count = resultsData.size();
-                    results.values = resultsData;
-                }
-                return results;
-            }
+        if ( companyFilter == null)
+            companyFilter = new CompanyFilter();
 
-            @SuppressWarnings("unchecked")
-            @Override
-            protected void publishResults(CharSequence constraint, FilterResults results) {
-                filteredCompanyList = (ArrayList<Company>) results.values;
+        return companyFilter;
+    }
+
+    private class CompanyFilter extends Filter {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            FilterResults results = new FilterResults();
+            // We implement here the filter logic
+            if (constraint == null || constraint.length() == 0) {
+                // No filter implemented we return all the list
+                results.values = companyList;
+                results.count = companyList.size();
+            }
+            else {
+                // We perform filtering operation
+                List<Company> nCompanyList = new ArrayList<Company>();
+                String nConstraint = constraint.toString().toUpperCase();
+                for (Company p : companyList) {
+                    if (p.getName().toUpperCase().contains(nConstraint))
+                        nCompanyList.add(p);
+                }
+
+                results.values = nCompanyList;
+                results.count = nCompanyList.size();
+
+            }
+            return results;
+        }
+
+        @SuppressWarnings("unchecked")
+        @Override
+        protected void publishResults(CharSequence constraint,FilterResults results) {
+            // Now we have to inform the adapter about the new list filtered
+            if (results.count == 0)
+                notifyDataSetInvalidated();
+            else {
+                filteredCompanyList = (List<Company>) results.values;
                 notifyDataSetChanged();
             }
-        };
+        }
+
     }
 
     private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
@@ -129,7 +151,7 @@ public class ImageAdapter extends BaseAdapter implements Filterable {
 
     @Override
     public long getItemId(int position) {
-        return 0;
+        return filteredCompanyList.get(position).getId();
     }
 
 }

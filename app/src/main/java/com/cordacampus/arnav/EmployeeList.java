@@ -4,9 +4,12 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.SearchView;
@@ -45,7 +48,7 @@ public class EmployeeList extends Activity {
 
         final ListView gridView = (ListView) findViewById(R.id.lst_employees);
         final ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar);
-        final SearchView searchView = (SearchView) findViewById(R.id.search_view);
+        final EditText searchView = (EditText) findViewById(R.id.search_view);
 
         final OnItemClickListener employeeClickListener = new OnItemClickListener() {
             @Override
@@ -83,16 +86,22 @@ public class EmployeeList extends Activity {
                         gridView.setAdapter(employeeAdapter);
                         gridView.setTextFilterEnabled(true);
 
-                        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                        searchView.addTextChangedListener(new TextWatcher() {
+
                             @Override
-                            public boolean onQueryTextSubmit(String query) {
-                                return false;
+                            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                                System.out.println("Text ["+s+"]");
+                                employeeAdapter.getFilter().filter(s.toString());
                             }
 
                             @Override
-                            public boolean onQueryTextChange(String newText) {
-                                employeeAdapter.getFilter().filter(newText);
-                                return false;
+                            public void beforeTextChanged(CharSequence s, int start, int count,
+                                                          int after) {
+
+                            }
+
+                            @Override
+                            public void afterTextChanged(Editable s) {
                             }
                         });
 
