@@ -19,7 +19,8 @@
         android:queryHint="Employee name"
         android:layout_centerHorizontal="true"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        />
 
     <Button
         android:id="@+id/company_button"
@@ -28,7 +29,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="15dp"
         android:background="@drawable/buttonshape"
-        android:padding="20dp"
+        android:padding="50dp"
         android:text="@string/search_by_company"
         android:onClick="gotoCompanyList"
         android:textColor="@color/colorPrimary" />
